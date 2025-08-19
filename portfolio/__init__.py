@@ -16,7 +16,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         logging.info(f"Using CSV path: {csv_path}")
 
         summary = tracker.get_portfolio_summary(csv_path=csv_path)
-        return func.HttpResponse(summary, status_code=200)
+        return func.HttpResponse(summary, status_code=200, mimetype="text/plain")
     except Exception:
         logging.error("Error while executing portfolio summary:")
         logging.error(traceback.format_exc())
