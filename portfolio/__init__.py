@@ -1,11 +1,18 @@
 import logging
 import azure.functions as func
-import os
-from . import tracker
+
+try:
+    from . import tracker
+except Exception as e:
+    logging.exception("Failed to import tracker module")
+    tracker = None
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
+    if tracker is None:
+        return func.HttpResponse("tracker module not loaded", status_code=500)
+
     try:
-        # Use absolute path for CSV relative to this file
+        import os
         csv_path = os.path.join(os.path.dirname(__file__), "transactions.csv")
         logging.info(f"Using CSV path: {csv_path}")
 
