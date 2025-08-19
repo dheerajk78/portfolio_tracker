@@ -1,11 +1,13 @@
 import logging
+import traceback
 import azure.functions as func
 
 try:
     from . import tracker
-except Exception as e:
-    logging.exception("Failed to import tracker module")
-    raise  # re-raise to get the error in logs and see the traceback
+except Exception:
+    logging.error("Failed to import tracker module")
+    logging.error(traceback.format_exc())
+    raise
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
@@ -15,6 +17,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         summary = tracker.get_portfolio_summary(csv_path=csv_path)
         return func.HttpResponse(summary, status_code=200)
-    except Exception as e:
-        logging.exception("Error while executing portfolio summary:")
-        return func.HttpResponse(f"Error: {str(e)}", status_code=500)
+    except Exception:
+        logging.error("Error while executing portfolio summary:")
+        logging.error(traceback.format_exc())
+        return func.HttpResponse("Internal Server Error", status_code=500)
