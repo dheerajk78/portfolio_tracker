@@ -179,6 +179,10 @@ def generate_summary(transactions):
 
     print("\n📊 Portfolio Summary:\n")
     print(tabulate(output_rows, headers=headers, tablefmt="grid"))
+    summary_str = "\n📊 Portfolio Summary:\n\n" + tabulate(output_rows, headers=headers, tablefmt="grid")
+    
+    # Instead of print, return the string
+    return summary_str
 
 # ==== MAIN ====
 if __name__ == "__main__":
