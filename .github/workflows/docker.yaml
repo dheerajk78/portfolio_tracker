@@ -23,4 +23,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: dheerajk78/portfolio_tracker:latest
+          tags: kdheeraj/portfolio_tracker:latest
