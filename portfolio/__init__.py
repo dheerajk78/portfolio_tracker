@@ -5,12 +5,9 @@ try:
     from . import tracker
 except Exception as e:
     logging.exception("Failed to import tracker module")
-    tracker = None
+    raise  # re-raise to get the error in logs and see the traceback
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    if tracker is None:
-        return func.HttpResponse("tracker module not loaded", status_code=500)
-
     try:
         import os
         csv_path = os.path.join(os.path.dirname(__file__), "transactions.csv")
