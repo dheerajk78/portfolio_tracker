@@ -12,5 +12,5 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         summary = tracker.get_portfolio_summary(csv_path=csv_path)
         return func.HttpResponse(summary, mimetype="text/plain")
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logging.exception("Unhandled exception in portfolio function:")
         return func.HttpResponse(f"Error: {str(e)}", status_code=500)
