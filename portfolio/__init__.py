@@ -1,11 +1,7 @@
 import logging
 import azure.functions as func
 import os
-
-try:
-    import tracker
-except Exception as e:
-    logging.exception("Failed to import tracker module.")
+from . import tracker
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     try:
